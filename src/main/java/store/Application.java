@@ -7,12 +7,14 @@ import store.repository.ProductStockRepository;
 import store.repository.PromotionRepository;
 import store.service.OrderService;
 import store.service.ProductStockService;
+import store.service.PromotionService;
 
 public class Application {
 
     private final OrderController orderController;
     private final OrderService orderService;
     private final ProductStockService productStockService;
+    private final PromotionService promotionService;
     private final ProductStockRepository productStockRepository;
     private final PromotionRepository promotionRepository;
 
@@ -23,10 +25,11 @@ public class Application {
                 new ProductStockRepository(Configuration.PRODUCT_STOCK_RESOURCE_PATH, promotionRepository);
         this.productStockService =
                 new ProductStockService(productStockRepository);
+        this.promotionService = new PromotionService(productStockService);
         this.orderService =
                 new OrderService(productStockService);
         this.orderController =
-                new OrderController(orderService, productStockService);
+                new OrderController(orderService, promotionService, productStockService);
     }
 
     public static void main(String[] args) {

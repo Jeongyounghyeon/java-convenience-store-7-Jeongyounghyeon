@@ -3,6 +3,7 @@ package store.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import store.domain.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
@@ -35,8 +36,20 @@ public class ProductStockService {
     }
 
     public boolean isExistStockByProductName(String productName) {
-        List<ProductStock> productStock = productStockRepository.findByProductName(productName);
-        if (productStock.isEmpty()) {
+        List<ProductStock> productStocks = productStockRepository.findByProductName(productName);
+        if (productStocks.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isRemainingPromotionStockByProductName(String productName) {
+        List<ProductStock> productStocks = productStockRepository.findByProductName(productName);
+        List<ProductStock> promotionStocks = productStocks.stream()
+                .filter(stock -> stock.getProductDetail() instanceof PromotionProduct)
+                .toList();
+
+        if (promotionStocks.stream().mapToInt(stock -> stock.getQuantity()).sum() == 0) {
             return false;
         }
         return true;
@@ -46,6 +59,13 @@ public class ProductStockService {
         List<ProductStock> stocksWithProductName = productStockRepository.findByProductName(productName);
         return stocksWithProductName.stream()
                 .mapToInt(ProductStock::getQuantity).sum();
+    }
+
+    public List<ProductStock> findPromotionStockByProductName(String productName) {
+        List<ProductStock> productStocks = productStockRepository.findByProductName(productName);
+        return productStocks.stream()
+                .filter(stock -> stock.getProductDetail() instanceof PromotionProduct)
+                .toList();
     }
 
     private int getStockQuantityByProduct(Product product) {
