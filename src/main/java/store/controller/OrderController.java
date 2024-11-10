@@ -10,6 +10,7 @@ import store.service.ProductStockService;
 import store.service.PromotionService;
 import store.view.InputErrorView;
 import store.view.InsufficientPromotionStockSelectInputView;
+import store.view.MembershipDiscountSelectView;
 import store.view.OrderInputView;
 import store.view.PromotionAddSelectView;
 
@@ -29,6 +30,7 @@ public class OrderController {
         List<Order> orders = inputValidOrders();
         orders = applyPromotion(orders);
         orders = applyInsufficientPromotionStock(orders);
+        boolean isMembershipDiscount = inputMembershipDiscountSelect();
     }
 
     private List<Order> inputValidOrders() {
@@ -114,6 +116,24 @@ public class OrderController {
     private Boolean attemptInputForInsufficientPromotionStockSelect(String productName, int insufficientQuantity) {
         try {
             Boolean select = InsufficientPromotionStockSelectInputView.select(productName, insufficientQuantity);
+            return select;
+        } catch (InvalidInputException e) {
+            InputErrorView.announce(e);
+            return null;
+        }
+    }
+
+    private boolean inputMembershipDiscountSelect() {
+        Boolean select = null;
+        while (select == null) {
+            select = attemptInputMembershipDiscountSelect();
+        }
+        return select;
+    }
+
+    private Boolean attemptInputMembershipDiscountSelect() {
+        try {
+            Boolean select = MembershipDiscountSelectView.select();
             return select;
         } catch (InvalidInputException e) {
             InputErrorView.announce(e);
