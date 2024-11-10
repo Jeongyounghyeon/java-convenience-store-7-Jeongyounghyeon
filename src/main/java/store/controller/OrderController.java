@@ -14,6 +14,7 @@ import store.view.InsufficientPromotionStockSelectInputView;
 import store.view.MembershipDiscountSelectView;
 import store.view.OrderInputView;
 import store.view.PromotionAddSelectView;
+import store.view.ReOrderSelectView;
 import store.view.ReceiptShowView;
 
 public class OrderController {
@@ -29,12 +30,16 @@ public class OrderController {
     }
 
     public void order() {
-        List<Order> orders = inputValidOrders();
-        orders = applyPromotion(orders);
-        orders = applyInsufficientPromotionStock(orders);
-        boolean isMembershipDiscount = inputMembershipDiscountSelect();
-        Receipt receipt = orderService.order(orders, isMembershipDiscount);
-        showReceipt(receipt);
+        boolean reOrder = true;
+        while (reOrder) {
+            List<Order> orders = inputValidOrders();
+            orders = applyPromotion(orders);
+            orders = applyInsufficientPromotionStock(orders);
+            boolean isMembershipDiscount = inputMembershipDiscountSelect();
+            Receipt receipt = orderService.order(orders, isMembershipDiscount);
+            showReceipt(receipt);
+            reOrder = inputReOrderSelect();
+        }
     }
 
     private List<Order> inputValidOrders() {
@@ -147,5 +152,23 @@ public class OrderController {
 
     private void showReceipt(Receipt receipt) {
         ReceiptShowView.showReceipt(receipt);
+    }
+
+    private boolean inputReOrderSelect() {
+        Boolean reOrder = null;
+        while (reOrder == null) {
+            reOrder = attemptInputReOrderSelect();
+        }
+        return reOrder;
+    }
+
+    private Boolean attemptInputReOrderSelect() {
+        try {
+            Boolean select = ReOrderSelectView.select();
+            return select;
+        } catch (InvalidInputException e) {
+            InputErrorView.announce(e);
+            return null;
+        }
     }
 }
