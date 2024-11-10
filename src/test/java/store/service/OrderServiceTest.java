@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.configuration.Configuration;
 import store.domain.Order;
+import store.exception.InsufficientStockException;
 import store.exception.NotFoundProductException;
 import store.repository.ProductStockRepository;
 import store.repository.PromotionRepository;
@@ -42,5 +43,14 @@ class OrderServiceTest {
 
         assertThatThrownBy(() ->orderService.validateOrder(order))
                 .isInstanceOf(NotFoundProductException.class);
+    }
+
+    @Test
+    @DisplayName("validateOrder는 재고가 부족한 상품에 대해 InsufficientStockException을 발생한다.")
+    void validateOrder_WithNonExistProductName_returnTrue() {
+        Order order = new Order("콜라", 21);
+
+        assertThatThrownBy(() ->orderService.validateOrder(order))
+                .isInstanceOf(InsufficientStockException.class);
     }
 }

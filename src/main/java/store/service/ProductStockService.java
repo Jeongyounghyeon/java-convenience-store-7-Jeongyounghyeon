@@ -42,6 +42,12 @@ public class ProductStockService {
         return true;
     }
 
+    public int getStockQuantityByProductName(String productName) {
+        List<ProductStock> stocksWithProductName = productStockRepository.findByProductName(productName);
+        return stocksWithProductName.stream()
+                .mapToInt(ProductStock::getQuantity).sum();
+    }
+
     private int getStockQuantityByProduct(Product product) {
         ProductStock stock = productStockRepository.findByProduct(product).get();
         return stock.getQuantity();
