@@ -44,6 +44,12 @@ public class ProductStockRepository extends FileRepository {
                 .findFirst();
     }
 
+    public List<ProductStock> findByProductName(String productName) {
+        return productStocks.stream()
+                .filter(productStock -> productName.equals(productStock.getProductDetail().getName()))
+                .toList();
+    }
+
     private List<ProductStock> initProductStocks(PromotionRepository promotionRepository) {
         List<ProductStock> productStocks = new ArrayList<>();
         List<Promotion> promotions = promotionRepository.findAll();

@@ -34,6 +34,14 @@ public class ProductStockService {
         stock.setQuantity(stockQuantity - quantity);
     }
 
+    public boolean isExistStockByProductName(String productName) {
+        List<ProductStock> productStock = productStockRepository.findByProductName(productName);
+        if (productStock.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
     private int getStockQuantityByProduct(Product product) {
         ProductStock stock = productStockRepository.findByProduct(product).get();
         return stock.getQuantity();
