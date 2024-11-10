@@ -68,6 +68,13 @@ public class ProductStockService {
                 .toList();
     }
 
+    public Optional<ProductStock> findFirstPromotionStockByProductName(String productName) {
+        List<ProductStock> stocksByProductName = productStockRepository.findByProductName(productName);
+        return stocksByProductName.stream()
+                .filter(stock -> stock.getProductDetail() instanceof PromotionProduct)
+                .findFirst();
+    }
+
     private int getStockQuantityByProduct(Product product) {
         ProductStock stock = productStockRepository.findByProduct(product).get();
         return stock.getQuantity();

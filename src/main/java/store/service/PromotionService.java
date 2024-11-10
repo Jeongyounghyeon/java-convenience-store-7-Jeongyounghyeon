@@ -26,6 +26,14 @@ public class PromotionService {
         return getAvailablePromotionQuantity(promotionStock.get(0), order.getQuantity());
     }
 
+    public int getInsufficientPromotionStockQuantity(Order order) {
+        if (!isValidPromotionStock(order)) {
+            return 0;
+        }
+
+        return calculateInsufficientQuantity(order);
+    }
+
     public boolean isPromotionIncludeNowDate(Promotion promotion) {
         return isPromotionIncludeDate(promotion, DateTimes.now());
     }
@@ -61,5 +69,39 @@ public class PromotionService {
             return Math.min(promotionStock.getQuantity() - orderQuantity, additionalQuantity);
         }
         return 0;
+    }
+
+    private boolean isValidPromotionStock(Order order) {
+        if (!productStockService.isRemainingPromotionStockByProductName(order.getProductName())) {
+            return false;
+        }
+
+        ProductStock promotionStock = productStockService.findFirstPromotionStockByProductName(order.getProductName()).get();
+        Promotion promotion = ((PromotionProduct) (promotionStock.getProductDetail())).getPromotion();
+
+        return isPromotionIncludeNowDate(promotion);
+    }
+
+    private int calculateInsufficientQuantity(Order order) {
+        ProductStock promotionStock = productStockService.findFirstPromotionStockByProductName(order.getProductName()).get();
+        Promotion promotion = ((PromotionProduct) (promotionStock.getProductDetail())).getPromotion();
+
+        int set = calculatePromotionSet(promotion);
+        int remaining = calculateRemainingStock(promotionStock, set);
+        int result = calculateResult(order, promotionStock, remaining);
+
+        return result < set ? 0 : result;
+    }
+
+    private int calculatePromotionSet(Promotion promotion) {
+        return promotion.getBuy() + promotion.getGet();
+    }
+
+    private int calculateRemainingStock(ProductStock stock, int set) {
+        return stock.getQuantity() % set;
+    }
+
+    private int calculateResult(Order order, ProductStock stock, int remaining) {
+        return remaining + (order.getQuantity() - stock.getQuantity());
     }
 }

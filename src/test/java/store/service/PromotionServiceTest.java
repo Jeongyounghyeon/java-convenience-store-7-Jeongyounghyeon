@@ -1,6 +1,7 @@
 package store.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -62,6 +63,26 @@ class PromotionServiceTest {
         assertThat(result2).isEqualTo(unavailableResult);
         assertThat(result3).isEqualTo(unavailableResult);
         assertThat(result4).isEqualTo(unavailableResult);
+    }
+
+    @Test
+    @DisplayName("getInsufficientPromotionStockQuantity는 재고 부족으로 정가 계산이 필요한 개수를 반환한다.")
+    public void getInsufficientPromotionStockQuantity() {
+        Order order1 = new Order("사이다", 12);
+        Order order2 = new Order("사이다", 11);
+        Order order3 = new Order("사이다", 10);
+
+        int expectedResult1 = 3;
+        int expectedResult2 = 0;
+        int expectedResult3 = 0;
+
+        int result1 = promotionService.getInsufficientPromotionStockQuantity(order1);
+        int result2 = promotionService.getInsufficientPromotionStockQuantity(order2);
+        int result3 = promotionService.getInsufficientPromotionStockQuantity(order3);
+
+        assertThat(result1).isEqualTo(expectedResult1);
+        assertThat(result2).isEqualTo(expectedResult2);
+        assertThat(result3).isEqualTo(expectedResult3);
     }
 
     Promotion generateSelfPromotion() {

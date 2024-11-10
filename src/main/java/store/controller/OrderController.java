@@ -9,6 +9,7 @@ import store.service.OrderService;
 import store.service.ProductStockService;
 import store.service.PromotionService;
 import store.view.InputErrorView;
+import store.view.InsufficientPromotionStockSelectInputView;
 import store.view.OrderInputView;
 import store.view.PromotionAddSelectView;
 
@@ -27,6 +28,7 @@ public class OrderController {
     public void order() {
         List<Order> orders = inputValidOrders();
         orders = applyPromotion(orders);
+        orders = applyInsufficientPromotionStock(orders);
     }
 
     private List<Order> inputValidOrders() {
@@ -76,6 +78,42 @@ public class OrderController {
     private Boolean attemptInputPromotionAddSelect(String productName, int additionalQuantity) {
         try {
             Boolean select = PromotionAddSelectView.select(productName, additionalQuantity);
+            return select;
+        } catch (InvalidInputException e) {
+            InputErrorView.announce(e);
+            return null;
+        }
+    }
+
+    private List<Order> applyInsufficientPromotionStock(List<Order> orders) {
+        List<Order> appliedOrders = new ArrayList<>();
+        for (Order order : orders) {
+            appliedOrders.add(applyInsufficientPromotionStock(order));
+        }
+        return appliedOrders;
+    }
+
+    private Order applyInsufficientPromotionStock(Order order) {
+        int insufficientQuantity = promotionService.getInsufficientPromotionStockQuantity(order);
+        if (insufficientQuantity != 0
+                && !inputForInsufficientPromotionStockSelect(order.getProductName(), insufficientQuantity)
+        ) {
+            return new Order(order.getProductName(), order.getQuantity() - insufficientQuantity);
+        }
+        return order;
+    }
+
+    private boolean inputForInsufficientPromotionStockSelect(String productName, int insufficientQuantity) {
+        Boolean select = null;
+        while (select == null) {
+            select = attemptInputForInsufficientPromotionStockSelect(productName, insufficientQuantity);
+        }
+        return select;
+    }
+
+    private Boolean attemptInputForInsufficientPromotionStockSelect(String productName, int insufficientQuantity) {
+        try {
+            Boolean select = InsufficientPromotionStockSelectInputView.select(productName, insufficientQuantity);
             return select;
         } catch (InvalidInputException e) {
             InputErrorView.announce(e);
