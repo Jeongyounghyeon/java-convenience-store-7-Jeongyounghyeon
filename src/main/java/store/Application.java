@@ -8,6 +8,7 @@ import store.repository.PromotionRepository;
 import store.service.OrderService;
 import store.service.ProductStockService;
 import store.service.PromotionService;
+import store.service.ReceiptService;
 
 public class Application {
 
@@ -15,6 +16,7 @@ public class Application {
     private final OrderService orderService;
     private final ProductStockService productStockService;
     private final PromotionService promotionService;
+    private final ReceiptService receiptService;
     private final ProductStockRepository productStockRepository;
     private final PromotionRepository promotionRepository;
 
@@ -26,8 +28,9 @@ public class Application {
         this.productStockService =
                 new ProductStockService(productStockRepository);
         this.promotionService = new PromotionService(productStockService);
+        this.receiptService = new ReceiptService();
         this.orderService =
-                new OrderService(productStockService);
+                new OrderService(productStockService, promotionService, receiptService);
         this.orderController =
                 new OrderController(orderService, promotionService, productStockService);
     }

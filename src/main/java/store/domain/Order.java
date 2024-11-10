@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Order {
 
-    private final String productName;
-    private final int quantity;
+    protected final String productName;
+    protected final int quantity;
 
     public Order(String productName, int quantity) {
         this.productName = productName;

@@ -24,7 +24,11 @@ class OrderServiceTest {
                 new ProductStockRepository(Configuration.PRODUCT_STOCK_RESOURCE_PATH, promotionRepository);
         ProductStockService productStockService =
                 new ProductStockService(productStockRepository);
-        this.orderService = new OrderService(productStockService);
+        PromotionService promotionService =
+                new PromotionService(productStockService);
+        ReceiptService receiptService =
+                new ReceiptService();
+        this.orderService = new OrderService(productStockService, promotionService, receiptService);
     }
 
     @Test

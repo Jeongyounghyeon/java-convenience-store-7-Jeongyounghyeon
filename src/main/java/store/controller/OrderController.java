@@ -3,6 +3,7 @@ package store.controller;
 import java.util.ArrayList;
 import java.util.List;
 import store.domain.Order;
+import store.domain.receipt.Receipt;
 import store.exception.InvalidArgumentException;
 import store.exception.InvalidInputException;
 import store.service.OrderService;
@@ -13,6 +14,7 @@ import store.view.InsufficientPromotionStockSelectInputView;
 import store.view.MembershipDiscountSelectView;
 import store.view.OrderInputView;
 import store.view.PromotionAddSelectView;
+import store.view.ReceiptShowView;
 
 public class OrderController {
 
@@ -31,6 +33,8 @@ public class OrderController {
         orders = applyPromotion(orders);
         orders = applyInsufficientPromotionStock(orders);
         boolean isMembershipDiscount = inputMembershipDiscountSelect();
+        Receipt receipt = orderService.order(orders, isMembershipDiscount);
+        showReceipt(receipt);
     }
 
     private List<Order> inputValidOrders() {
@@ -139,5 +143,9 @@ public class OrderController {
             InputErrorView.announce(e);
             return null;
         }
+    }
+
+    private void showReceipt(Receipt receipt) {
+        ReceiptShowView.showReceipt(receipt);
     }
 }

@@ -75,6 +75,22 @@ public class ProductStockService {
                 .findFirst();
     }
 
+    public ProductStock takeoutStock(Product product, int quantity) {
+        decreaseStock(product, quantity);
+
+        return new ProductStock(product, quantity);
+    }
+
+    public Optional<ProductStock> findNonPromotionStockByProductName(String productName) {
+        return productStockRepository.findByProductName(productName).stream()
+                .filter(productStock -> !(productStock.getProductDetail() instanceof PromotionProduct))
+                .findFirst();
+    }
+
+    public Product findProductDetailByProductName(String productName) {
+        return productStockRepository.findByProductName(productName).stream().findFirst().get().getProductDetail();
+    }
+
     private int getStockQuantityByProduct(Product product) {
         ProductStock stock = productStockRepository.findByProduct(product).get();
         return stock.getQuantity();
