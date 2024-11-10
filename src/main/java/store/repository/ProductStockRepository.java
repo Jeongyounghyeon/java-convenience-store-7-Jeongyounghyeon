@@ -25,12 +25,6 @@ public class ProductStockRepository extends FileRepository {
         }
     }
 
-    public List<ProductStock> findByProductName(String productName) {
-        return productStocks.stream()
-                .filter(productStock -> productStock.getProductDetail().getName().equals(productName))
-                .toList();
-    }
-
     public Optional<ProductStock> findByProduct(Product product) {
         if (product instanceof PromotionProduct) {
             return findByProduct((PromotionProduct) product);
