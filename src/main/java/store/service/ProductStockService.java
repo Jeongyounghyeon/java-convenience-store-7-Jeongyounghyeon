@@ -3,12 +3,9 @@ package store.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import store.domain.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
 import store.domain.stock.ProductStock;
-import store.domain.stock.Stock;
 import store.dto.ProductStockStatus;
 import store.repository.ProductStockRepository;
 

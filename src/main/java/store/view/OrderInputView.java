@@ -19,7 +19,6 @@ public class OrderInputView {
             """;
     private static final OrderInputParser PARSER = new OrderInputParser();
 
-
     public static List<Order> order(List<ProductStockStatus> stocks) {
         announce(stocks);
         return PARSER.parseOrders(Console.readLine());

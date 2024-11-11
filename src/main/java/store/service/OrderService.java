@@ -8,8 +8,6 @@ import store.domain.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
 import store.domain.receipt.Receipt;
-import store.domain.receipt.ReceiptGiftDetail;
-import store.domain.receipt.ReceiptProductDetail;
 import store.domain.stock.ProductStock;
 import store.exception.InsufficientStockException;
 import store.exception.NotFoundProductException;

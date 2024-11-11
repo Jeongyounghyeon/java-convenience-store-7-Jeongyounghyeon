@@ -1,7 +1,5 @@
 package store.view;
 
-import store.exception.InvalidInputException;
-
 public class InputErrorView {
 
     private static final String EXCEPTION_PREFIX = "[ERROR] ";
