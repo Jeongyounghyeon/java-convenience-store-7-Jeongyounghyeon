@@ -9,7 +9,7 @@ import java.time.Month;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.configuration.Configuration;
-import store.domain.Promotion;
+import store.domain.product.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
 import store.domain.stock.ProductStock;

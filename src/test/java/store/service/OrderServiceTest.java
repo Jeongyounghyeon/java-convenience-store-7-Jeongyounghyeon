@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.configuration.Configuration;
-import store.domain.Order;
+import store.domain.order.Order;
 import store.exception.InsufficientStockException;
 import store.exception.NotFoundProductException;
 import store.repository.ProductStockRepository;

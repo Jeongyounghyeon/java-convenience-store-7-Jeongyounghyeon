@@ -2,7 +2,7 @@ package store.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import store.domain.Order;
+import store.domain.order.Order;
 import store.domain.receipt.Receipt;
 import store.exception.InvalidArgumentException;
 import store.exception.InvalidInputException;

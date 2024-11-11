@@ -3,7 +3,7 @@ package store.view.parser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import store.domain.Order;
+import store.domain.order.Order;
 import store.exception.InvalidInputException;
 
 public class OrderInputParser {

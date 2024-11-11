@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import store.domain.Promotion;
+import store.domain.product.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
 import store.domain.stock.ProductStock;

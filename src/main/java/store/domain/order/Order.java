@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.order;
 
 import java.util.Objects;
 

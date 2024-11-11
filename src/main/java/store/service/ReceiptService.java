@@ -2,7 +2,7 @@ package store.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import store.domain.OrderResult;
+import store.domain.order.OrderResult;
 import store.domain.receipt.Receipt;
 import store.domain.receipt.ReceiptGiftDetail;
 import store.domain.receipt.ReceiptProductDetail;

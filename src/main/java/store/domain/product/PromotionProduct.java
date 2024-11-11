@@ -1,7 +1,6 @@
 package store.domain.product;
 
 import java.util.Objects;
-import store.domain.Promotion;
 
 public class PromotionProduct extends Product {
 

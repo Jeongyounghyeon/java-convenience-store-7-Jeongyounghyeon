@@ -2,9 +2,9 @@ package store.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import store.domain.Order;
-import store.domain.OrderResult;
-import store.domain.Promotion;
+import store.domain.order.Order;
+import store.domain.order.OrderResult;
+import store.domain.product.Promotion;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
 import store.domain.receipt.Receipt;

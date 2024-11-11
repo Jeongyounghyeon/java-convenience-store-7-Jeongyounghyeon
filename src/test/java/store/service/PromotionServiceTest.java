@@ -9,8 +9,8 @@ import java.time.Month;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.configuration.Configuration;
-import store.domain.Order;
-import store.domain.Promotion;
+import store.domain.order.Order;
+import store.domain.product.Promotion;
 import store.repository.ProductStockRepository;
 import store.repository.PromotionRepository;
 

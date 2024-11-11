@@ -3,7 +3,7 @@ package store.view;
 import camp.nextstep.edu.missionutils.Console;
 import java.text.DecimalFormat;
 import java.util.List;
-import store.domain.Order;
+import store.domain.order.Order;
 import store.dto.ProductStockStatus;
 import store.view.parser.OrderInputParser;
 

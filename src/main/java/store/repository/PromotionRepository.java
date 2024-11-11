@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import store.domain.Promotion;
+import store.domain.product.Promotion;
 import store.exception.RepositoryInitException;
 
 public class PromotionRepository extends FileRepository {

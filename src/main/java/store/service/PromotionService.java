@@ -3,8 +3,8 @@ package store.service;
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
 import java.util.List;
-import store.domain.Order;
-import store.domain.Promotion;
+import store.domain.order.Order;
+import store.domain.product.Promotion;
 import store.domain.product.PromotionProduct;
 import store.domain.stock.ProductStock;
 
